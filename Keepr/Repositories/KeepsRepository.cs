@@ -37,6 +37,9 @@ namespace Keepr.Repositories
       name = @Name,
       img = @Img,
       description = @Description,
+      keeps = @Keeps,
+      views = @Views,
+      shares = @Shares,
       WHERE id = @Id;
       ";
       return keepData;
