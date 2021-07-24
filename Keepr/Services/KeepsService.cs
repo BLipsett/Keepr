@@ -58,9 +58,14 @@ namespace Keepr.Services
 
     }
 
-    internal void Delete(int id1, string id2)
+    public void Delete(int id, string userId)
     {
-      throw new NotImplementedException();
+      Keep keep = _kr.GetOne(id);
+      if (keep.CreatorId != userId)
+      {
+        throw new Exception("Invalid user");
+      }
+      _kr.Delete(id);
     }
   }
 }
