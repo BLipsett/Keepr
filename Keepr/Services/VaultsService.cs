@@ -41,7 +41,7 @@ namespace Keepr.Services
       {
         throw new Exception("Invalid Id");
       }
-      if (vaultData.CreatorId != id)
+      if (vaultData.CreatorId != OgVault.CreatorId)
       {
         throw new Exception("Only the creator can edit this vault");
       }
