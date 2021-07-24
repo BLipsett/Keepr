@@ -26,7 +26,7 @@ namespace Keepr.Services
       return _kr.GetAll();
     }
 
-    public Keep UpdateKeep(Keep keepData)
+    internal int UpdateKeep(Keep keepData)
     {
       Keep OriginalKeep = _kr.GetOne(keepData.Id);
       if (OriginalKeep == null)
@@ -35,9 +35,6 @@ namespace Keepr.Services
       }
       if (OriginalKeep.CreatorId != keepData.CreatorId)
       {
-
-
-
         throw new Exception("You must be the creator to update");
       }
       OriginalKeep.Name = keepData.Name ?? OriginalKeep.Name;

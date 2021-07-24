@@ -22,7 +22,7 @@ namespace Keepr.Controllers
       _acs = acs;
     }
 
-    [Authorize]
+
     [HttpGet("{id}")]
     public ActionResult<Vault> GetOne(int id)
     {
@@ -30,9 +30,9 @@ namespace Keepr.Controllers
       {
         return Ok(_vs.GetVault(id));
       }
-      catch (System.Exception)
+      catch (System.Exception e)
       {
-        throw;
+        return BadRequest(e.Message);
       }
 
     }
@@ -47,6 +47,41 @@ namespace Keepr.Controllers
         vault.CreatorId = userInfo.Id;
         vault.Creator = userInfo;
         return Ok(_vs.Create(vault));
+      }
+      catch (System.Exception e)
+      {
+        return BadRequest(e.Message);
+      }
+    }
+
+    [Authorize]
+    [HttpPut("{id}")]
+    public async Task<ActionResult<Vault>> Update(int id, [FromBody] Vault vaultData)
+    {
+
+      try
+      {
+        Account userInfo = await HttpContext.GetUserInfoAsync<Account>();
+        vaultData.CreatorId = userInfo.Id;
+        vaultData.Id = id;
+        var v = _vs.UpdateVault(vaultData, userInfo.Id);
+        return Ok(v);
+      }
+      catch (System.Exception e)
+      {
+        return BadRequest(e.Message);
+      }
+    }
+
+    [Authorize]
+    [HttpDelete("{id}")]
+    public async Task<ActionResult<Vault>> Delete(int id)
+    {
+      try
+      {
+        Account userInfo = await HttpContext.GetUserInfoAsync<Account>();
+        _vs.Delete(id, userInfo.Id);
+        return Ok("removed successfully");
       }
       catch (System.Exception e)
       {

@@ -29,7 +29,7 @@ namespace Keepr.Repositories
       return _db.ExecuteScalar<int>(sql, keepData);
     }
 
-    public Keep UpdateKeep(Keep keepData)
+    internal int UpdateKeep(Keep keepData)
     {
       string sql = @"
       UPDATE keeps
@@ -39,15 +39,15 @@ namespace Keepr.Repositories
       description = @Description,
       keeps = @Keeps,
       views = @Views,
-      shares = @Shares,
+      shares = @Shares
       WHERE id = @Id;
       ";
-      return keepData;
-      var rowsAffected = _db.Execute(sql, keepData);
-      if (rowsAffected > 1)
-      {
-        throw new Exception("many roes have been deleted");
-      }
+      return _db.Execute(sql, keepData);
+
+      // if (rowsAffected > 1)
+      // {
+      //   throw new Exception("many roes have been deleted");
+      // }
     }
 
     internal Keep GetOne(int id)
