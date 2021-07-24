@@ -39,3 +39,15 @@ CREATE TABLE IF NOT EXISTS vaultKeeps(
 ) DEFAULT charset utf8 COMMENT '';
 
 DROP Table keeps;
+
+SELECT
+      vk.*,
+     v.*,
+     k.*
+      FROM vaultKeeps vk
+      JOIN vaults v ON v.id = vk.vaultId
+      JOIN keeps k ON k.id = vk.keepId
+      WHERE vk.id = 1;
+
+SELECT * FROM vaultKeeps;
+    
