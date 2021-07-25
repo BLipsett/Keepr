@@ -47,7 +47,8 @@ SELECT
       FROM vaultKeeps vk
       JOIN vaults v ON v.id = vk.vaultId
       JOIN keeps k ON k.id = vk.keepId
-      WHERE vk.id = 1;
+      WHERE vk.vaultId = 55
+      ;
 
 SELECT * FROM vaultKeeps;
     

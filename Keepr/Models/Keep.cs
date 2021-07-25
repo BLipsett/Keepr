@@ -13,4 +13,10 @@ namespace Keepr.Models
 
     public Profile Creator { get; set; }
   }
+
+  public class VaultKeepView : Keep
+  {
+    public Vault Vault { get; set; }
+
+  }
 }

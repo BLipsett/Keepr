@@ -28,7 +28,7 @@ namespace Keepr.Repositories
       return _db.ExecuteScalar<int>(sql, vaultKeep);
     }
 
-    internal List<VaultKeep> GetVaultKeeps(int id)
+    internal List<VaultKeepView> GetVaultKeeps(int id)
     {
       string sql = @"
       SELECT
@@ -38,13 +38,14 @@ namespace Keepr.Repositories
       FROM vaultKeeps vk
       JOIN vaults v ON v.id = vk.vaultId
       JOIN keeps k ON k.id = vk.keepId
-      WHERE v.id = @id;
+      WHERE vk.vaultId = @id;
       ";
-      return _db.Query<VaultKeep, Profile, VaultKeep>(sql, (vk, p) =>
+      return _db.Query<VaultKeepView, Vault, VaultKeepView>(sql, (k, v) =>
       {
-        vk.Creator = p;
-        return vk;
-      }, new { id }).ToList();
+        k.Vault = v;
+
+        return k;
+      }, new { id }, splitOn: "id").ToList();
     }
   }
 }

@@ -21,7 +21,7 @@ namespace Keepr.Services
       return vaultKeep;
     }
 
-    internal List<VaultKeep> GetVaultKeepsById(int id)
+    internal List<VaultKeepView> GetVaultKeepsById(int id)
     {
       var vkeeps = _vkr.GetVaultKeeps(id);
       return vkeeps;
