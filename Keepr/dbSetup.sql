@@ -51,4 +51,11 @@ SELECT
       ;
 
 SELECT * FROM vaultKeeps;
+
+SELECT 
+k.*,
+vk.id AS VaultKeepId
+FROM vaultKeeps vk
+JOIN keeps k on k.id = vk.keepId
+WHERE vk.vaultId = 55;
     

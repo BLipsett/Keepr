@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Keepr.Models;
 using Keepr.Repositories;
+using Microsoft.AspNetCore.Http;
 
 namespace Keepr.Services
 {
@@ -9,9 +11,14 @@ namespace Keepr.Services
   {
     private readonly VaultKeepsRepository _vkr;
 
-    public VaultKeepsService(VaultKeepsRepository vkr)
+    private readonly VaultsRepository _vr;
+    private readonly AccountService _acs;
+
+    public VaultKeepsService(VaultKeepsRepository vkr, VaultsRepository vr, AccountService acs)
     {
       _vkr = vkr;
+      _vr = vr;
+      _acs = acs;
     }
 
     public VaultKeep Create(VaultKeep vaultKeep)
@@ -21,8 +28,17 @@ namespace Keepr.Services
       return vaultKeep;
     }
 
-    internal List<VaultKeepView> GetVaultKeepsById(int id)
+    internal async Task<List<VaultKeepView>> GetVaultKeepsById(int id)
     {
+      Vault vault = _vr.GetOne(id);
+      if (vault.IsPrivate)
+      {
+        Account userInfo = await HttpContext.GetUserInfoAsync<Account>();
+        if (userInfo.Id != vault.CreatorId)
+        {
+          throw new Exception("Only the owner can see this vault");
+        }
+      }
       var vkeeps = _vkr.GetVaultKeeps(id);
       return vkeeps;
     }

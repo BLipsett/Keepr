@@ -43,6 +43,9 @@ namespace Keepr.Controllers
     {
       try
       {
+
+        // Account userInfo = await HttpContext.GetUserInfoAsync<Account>();
+
         return Ok(_vks.GetVaultKeepsById(id));
       }
       catch (System.Exception e)
