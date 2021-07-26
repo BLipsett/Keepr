@@ -28,13 +28,11 @@ namespace Keepr.Services
       return vaultKeep;
     }
 
-    internal async Task<List<VaultKeepView>> GetVaultKeepsById(int id)
+    internal List<VaultKeepViewModel> GetVaultKeepsById(int id)
     {
       Vault vault = _vr.GetOne(id);
       if (vault.IsPrivate)
       {
-        Account userInfo = await HttpContext.GetUserInfoAsync<Account>();
-        if (userInfo.Id != vault.CreatorId)
         {
           throw new Exception("Only the owner can see this vault");
         }

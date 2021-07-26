@@ -70,9 +70,18 @@ namespace Keepr.Repositories
     internal List<Keep> GetAll()
     {
       string sql = @"
-      SELECT * FROM keeps;
+      SELECT 
+      k.* ,
+      a.*
+      FROM 
+      keeps k
+      JOIN accounts a ON k.creatorId = a.id;
       ";
-      return _db.Query<Keep>(sql).ToList();
+      return _db.Query<Keep, Profile, Keep>(sql, (k, p) =>
+      {
+        k.Creator = p;
+        return k;
+      }, splitOn: "id").ToList();
     }
 
     internal void Delete(int id)

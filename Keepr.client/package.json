@@ -12,10 +12,13 @@
     "axios": "^0.21.1",
     "bootstrap": "^4.6.0",
     "jquery": "^3.6.0",
+    "magic-grid": "^3.2.4",
+    "masonry-layout": "^4.2.2",
     "popper.js": "^1.16.1",
     "socket.io-client": "^4.1.2",
     "sweetalert2": "^11.0.17",
     "vue": "^3.0.11",
+    "vue-magic-grid": "^0.0.4",
     "vue-router": "^4.0.8"
   },
   "devDependencies": {
