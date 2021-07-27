@@ -1,5 +1,5 @@
 <template>
-  <div class="card keepCard" @click="popmodal" data-toggle="modal" data-target="#exampleModal">
+  <div class="card keepCard" @click="setActiveKeep(keep)" data-toggle="modal" data-target="#exampleModal">
     <p>{{ keep.name }}</p>
     <p>{{ keep.shares }}</p>
     <img class="keepImg" :src="keep.img" />
@@ -7,23 +7,28 @@
       Launch demo modal
     </button>
   </div>
-  <KeepModal />
+  <div v-if="state.activeKeep">
+    <KeepModal />
+  </div>
 </template>
 
 <script>
-import $ from 'jquery'
-import { keepsService } from '../services/KeepsService'
+import { reactive } from '@vue/reactivity'
+
+import { AppState } from '../AppState'
 export default {
   props: {
     keep: { type: Object, required: true }
   },
   setup() {
+    const state = reactive({
+      activeKeep: AppState.activeKeep
+    })
     return {
-      popmodal() {
-        console.log('pop modal')
-        keepsService.setActiveKeep(){
-          
-        }
+      state,
+      async setActiveKeep(keep) {
+        AppState.activeKeep = keep
+        console.log(AppState.activeKeep)
       }
 
     }
