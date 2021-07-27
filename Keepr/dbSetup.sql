@@ -58,4 +58,10 @@ vk.id AS VaultKeepId
 FROM vaultKeeps vk
 JOIN keeps k on k.id = vk.keepId
 WHERE vk.vaultId = 55;
+
+
+SELECT 
+*
+FROM keeps 
+WHERE keeps.creatorId = "60cee92c5acedb4be5732630";
     

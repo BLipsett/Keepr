@@ -8,7 +8,7 @@
     </button>
   </div>
   <div v-if="state.activeKeep">
-    <KeepModal />
+    <KeepModal :keep="state.activeKeep" />
   </div>
 </template>
 
