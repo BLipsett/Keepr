@@ -1,9 +1,7 @@
 <template>
   <div class="container-fluid">
-    <div class="row">
-      <div class="card-columns">
-        <Keep v-for="k in state.keeps" :key="k.id" :keep="k" />
-      </div>
+    <div class="card-columns">
+      <Keep v-for="k in state.keeps" :key="k.id" :keep="k" />
     </div>
   </div>
 </template>
