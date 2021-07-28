@@ -13,18 +13,26 @@ namespace Keepr.Services
 
     private readonly VaultsRepository _vr;
     private readonly AccountService _acs;
+    private readonly VaultsService _vs;
 
-    public VaultKeepsService(VaultKeepsRepository vkr, VaultsRepository vr, AccountService acs)
+    public VaultKeepsService(VaultKeepsRepository vkr, VaultsRepository vr, AccountService acs, VaultsService vs)
     {
       _vkr = vkr;
       _vr = vr;
       _acs = acs;
+      _vs = vs;
     }
 
-    public VaultKeep Create(VaultKeep vaultKeep)
+    public VaultKeep Create(VaultKeep vaultKeep, string userId)
     {
+
       int id = _vkr.Create(vaultKeep);
       vaultKeep.Id = id;
+      Vault vault = _vr.GetOne(vaultKeep.VaultId);
+      if (vault.CreatorId != userId)
+      {
+        throw new Exception("only vault owner can create relationship");
+      }
       return vaultKeep;
     }
 
@@ -39,6 +47,18 @@ namespace Keepr.Services
       }
       var vkeeps = _vkr.GetVaultKeeps(id);
       return vkeeps;
+    }
+
+
+
+    internal void Delete(int id, string userId)
+    {
+      VaultKeep vKeep = _vkr.GetOneVk(id);
+      if (vKeep.CreatorId != userId)
+      {
+        throw new Exception("Only creator can delete");
+      }
+      _vkr.Delete(id);
     }
   }
 }

@@ -1,9 +1,13 @@
 <template>
   <div class="card keepCard" @click="setActiveKeep(keep)" data-toggle="modal" data-target="#exampleModal">
-    <img class="keepImg" :src="keep.img">
-    <div class="card-img-overlay">
-      <p>{{ keep.name }}</p>
-      <img class="profPic" :src="keep.creator.picture" @click="getProfile(keep.creatorId)" />
+    <img class="keepBg" :src="keep.img">
+    <div class="card-img-overlay d-flex">
+      <div class="align-items-center">
+        <p class="cardTitle">
+          {{ keep.name }}
+        </p>
+        <img class="profPic" :src="keep.creator.picture" @click="getProfile(keep.creatorId)" />
+      </div>
     </div>
   </div>
   <div v-if="state.activeKeep">
@@ -34,10 +38,9 @@ export default {
         console.log(AppState.activeKeep)
       },
       async getProfile(id) {
-        await profilesService.getProfile(id)
         $('#exampleModal').modal('toggle')
+        await profilesService.getProfile(id)
         router.push({ name: 'Profiles', params: { id } })
-
         console.log('get profile', id)
       }
 
@@ -50,16 +53,24 @@ export default {
 <style scoped>
 .keepCard {
 max-width: 100%;
+border-radius: 1.25rem;
 }
 
-.keepImg {
+.keepBg {
  max-width: 100%;
  object-fit: cover;
+border-radius: 1.25rem;
+
 }
 
 .profPic {
   height: 3rem;
   width: 3rem;
   border-radius: 50%;
+}
+
+.cardTitle {
+  font-size: 1.75rem;
+  color: whitesmoke;
 }
 </style>

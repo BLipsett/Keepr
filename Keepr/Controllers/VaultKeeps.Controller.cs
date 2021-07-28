@@ -30,9 +30,25 @@ namespace Keepr.Controllers
       {
         Account userInfo = await HttpContext.GetUserInfoAsync<Account>();
         vaultKeep.CreatorId = userInfo.Id;
-        var vk = _vks.Create(vaultKeep);
+        var vk = _vks.Create(vaultKeep, userInfo.Id);
         return Ok(vk);
 
+      }
+      catch (System.Exception e)
+      {
+        return BadRequest(e.Message);
+      }
+    }
+
+    [Authorize]
+    [HttpDelete("{id}")]
+    public async Task<ActionResult<VaultKeep>> Delete(int id)
+    {
+      try
+      {
+        Account userInfo = await HttpContext.GetUserInfoAsync<Account>();
+        _vks.Delete(id, userInfo.Id);
+        return Ok("Successfully removed");
       }
       catch (System.Exception e)
       {

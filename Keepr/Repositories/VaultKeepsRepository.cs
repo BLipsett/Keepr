@@ -50,5 +50,24 @@ namespace Keepr.Repositories
         return k;
       }, new { id }, splitOn: "id").ToList();
     }
+
+    internal VaultKeep GetOneVk(int id)
+    {
+      string sql = @"
+      SELECT * FROM vaultKeeps
+      WHERE vaultKeeps.id = @id;
+      ";
+      return _db.QueryFirstOrDefault<VaultKeep>(sql, new { id });
+
+    }
+
+    internal void Delete(int id)
+    {
+      string sql = @"
+      DELETE FROM vaultKeeps
+      WHERE id =@id LIMIT 1;
+      ";
+      _db.Execute(sql, new { id });
+    }
   }
 }

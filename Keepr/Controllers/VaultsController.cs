@@ -26,11 +26,19 @@ namespace Keepr.Controllers
     }
 
     [HttpGet("{id}")]
-    public ActionResult<Vault> GetOne(int id)
+    public async Task<ActionResult<Vault>> GetOne(int id)
     {
       try
       {
-        return Ok(_vs.GetVault(id));
+        Account userInfo = await HttpContext.GetUserInfoAsync<Account>();
+        if (userInfo == null)
+        {
+          return Ok(_vs.GetVault(id));
+        }
+        return Ok(_vs.GetCreatorsVault(id, userInfo.Id));
+
+
+
       }
       catch (System.Exception e)
       {
@@ -78,8 +86,8 @@ namespace Keepr.Controllers
       try
       {
         Account userInfo = await HttpContext.GetUserInfoAsync<Account>();
-        vaultData.CreatorId = userInfo.Id;
         vaultData.Id = id;
+        vaultData.CreatorId = userInfo.Id;
         var v = _vs.UpdateVault(vaultData, userInfo.Id);
         return Ok(v);
       }

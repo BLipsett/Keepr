@@ -1,23 +1,28 @@
 <template>
   <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">
-            Modal title
-          </h5>
-          <button type="button" class="btn-close btn-block" data-dismiss="modal" aria-label="Close" @click="unsetActive()">
-            close
-          </button>
-        </div>
-        <div class="modal-body">
-          <img class="keepImg" :src="state.activeKeep.img" />
-          <p>{{ state.activeKeep.name }}</p>
-          ..
-        </div>
-        <button class="btn-primary" @click="read">
-          keep button
+      <div class="modal-content d-flex">
+        <button type="button" class="btn-close btn-block" data-dismiss="modal" aria-label="Close" @click="unsetActive()">
+          close
         </button>
+        <div class="row">
+          <div class="col-6">
+            <img class="modalKeepImg" :src="state.activeKeep.img" />
+          </div>
+          <div class="justify-content-center">
+            <div class="col-6 d-flex ">
+              <div class="r">
+                <i class="fas fa-eye">{{ state.activeKeep.views }} </i>
+                <i class="fab fa-korvue">{{ state.activeKeep.keeps }} </i>
+                <i class="fas fa-share-alt">{{ state.activeKeep.shares }} </i>
+              </div>
+              <h2>
+                {{ state.activeKeep.name }}
+              </h2>
+              <p>{{ state.activeKeep.description }}</p>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -52,8 +57,13 @@ export default {
 
 <style>
 
-.keepImg {
-  width: 20vw;
+.modalKeepImg {
+  width: 30vw;
+}
+
+.modal-dialog {
+  max-width: 60vw;
+  width: 100%;
 }
 
 </style>

@@ -27,6 +27,16 @@ namespace Keepr.Services
       throw new Exception("Object Id does not exist");
     }
 
+    public Vault GetCreatorsVault(int id, string userId)
+    {
+      Vault vault = _vr.GetOne(id);
+      if (vault.CreatorId == userId)
+      {
+        return vault;
+      }
+      throw new Exception("Access denied");
+    }
+
     public Vault Create(Vault newVault)
     {
       int id = _vr.Create(newVault);

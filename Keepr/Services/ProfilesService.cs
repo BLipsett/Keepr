@@ -35,7 +35,6 @@ namespace Keepr.Services
         {
           throw new Exception("invalid user");
         }
-
         return vaults;
       }
       throw new Exception("bad");
