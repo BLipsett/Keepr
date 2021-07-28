@@ -1,5 +1,15 @@
 <template>
   <div class="container-fluid">
+    <div class="dropdown">
+      <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-toggle="dropdown" aria-expanded="false">
+        Dropdown button
+      </button>
+      <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+        <li><a class="dropdown-item" href="#">Action</a></li>
+        <li><a class="dropdown-item" href="#">Another action</a></li>
+        <li><a class="dropdown-item" href="#">Something else here</a></li>
+      </ul>
+    </div>
     <div class="row mb-4">
       <div class="col-md-3">
         <img v-if="state.profile.picture == state.profile.picture" class="profCreator" :src="state.profile.picture" />
@@ -12,6 +22,12 @@
           Keeps: {{ state.keeps.length }}
         </h2>
       </div>
+      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#keepModal">
+        create keep
+      </button>
+      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#vaultModal">
+        create vault
+      </button>
     </div>
     <div class="row">
       <div class="col-12 d-flex">
@@ -26,6 +42,7 @@
       </div>
     </div>
   </div>
+  <CreateKeepModal />
 </template>
 
 <script>
@@ -34,6 +51,7 @@ import { profilesService } from '../services/ProfilesService'
 import { logger } from '../utils/Logger'
 import { useRoute } from 'vue-router'
 import { AppState } from '../AppState'
+// import { createPopper } from 'popperjs/core'
 export default {
   setup() {
     const state = reactive({

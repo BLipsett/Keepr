@@ -1,18 +1,22 @@
 <template>
-  <div class="card keepCard" @click="setActiveKeep(keep)" data-toggle="modal" data-target="#exampleModal">
-    <img class="keepBg" :src="keep.img">
-    <div class="card-img-overlay d-flex">
-      <div class="align-items-center">
-        <p class="cardTitle">
-          {{ keep.name }}
-        </p>
+  <div>
+    <div class="card keepCard" @click="setActiveKeep(keep)" data-toggle="modal" data-target="#exampleModal">
+      <img class="keepBg" :src="keep.img">
+      <div class="card-img-overlay d-flex">
+        <div class="align-items-center">
+          <p class="cardTitle">
+            {{ keep.name }}
+          </p>
+        </div>
       </div>
+      <img class="profPic"
+           :src="keep.creator.picture"
+           @click="getProfile(keep.creatorId)"
+           data-dismiss="modal"
+      />
     </div>
   </div>
-  <img class="profPic" :src="keep.creator.picture" @click="getProfile(keep.creatorId)" />
-  <div v-if="state.activeKeep">
-    <KeepModal v-if="state.activeKeep" :keep="state.activeKeep" />
-  </div>
+  <KeepModal :keep="state.activeKeep" />
 </template>
 
 <script>
@@ -21,6 +25,7 @@ import { profilesService } from '../services/ProfilesService'
 import { AppState } from '../AppState'
 import { router } from '../router'
 import $ from 'jquery'
+import { vaultsService } from '../services/VaultsService'
 
 export default {
   props: {
@@ -39,12 +44,18 @@ export default {
       },
       async getProfile(id) {
         $('#exampleModal').modal('toggle')
+        // $('#exampleModal').modal('toggle')
         // $('#exampleModal').modal('hide')
         // $('body').removeClass('modal-open')
         // $('.modal-backdrop').remove()
         await profilesService.getProfile(id)
         router.push({ name: 'Profiles', params: { id } })
         console.log('get profile', id)
+      },
+      async addToVault(kid) {
+        const vid = 312
+        vaultsService.createVaultKeep(vid, kid)
+        console.log(vid, kid)
       }
 
     }
@@ -70,6 +81,9 @@ border-radius: 1.25rem;
   height: 3rem;
   width: 3rem;
   border-radius: 50%;
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
 }
 
 .cardTitle {

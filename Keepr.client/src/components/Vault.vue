@@ -1,6 +1,6 @@
 <template>
   <div class="col-3">
-    <div class="vaultCard">
+    <div class="vaultCard" @click="getVaultKeeps(vault.id)">
       <h3>{{ vault.name }}</h3>
     </div>
   </div>
@@ -9,6 +9,7 @@
 <script>
 import { reactive } from '@vue/reactivity'
 import { AppState } from '../AppState'
+import { vaultsService } from '../services/VaultsService'
 export default {
   props: {
     vault: { type: Object, required: true }
@@ -18,7 +19,11 @@ export default {
       vault: AppState.profileVaults
     })
     return {
-      state
+      state,
+      getVaultKeeps(id) {
+        vaultsService.getVaultKeeps(id)
+        console.log(id, 'get this shit')
+      }
 
     }
   }

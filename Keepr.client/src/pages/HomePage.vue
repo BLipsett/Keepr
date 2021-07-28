@@ -10,13 +10,18 @@ import { reactive } from '@vue/reactivity'
 import { computed, watchEffect } from '@vue/runtime-core'
 import { AppState } from '../AppState'
 import { keepsService } from '../services/KeepsService'
+// import { vaultsService } from '../services/VaultsService'
+import { profilesService } from '../services/ProfilesService'
 
 export default {
   setup() {
     const state = reactive({
-      keeps: computed(() => AppState.keeps)
+      keeps: computed(() => AppState.keeps),
+      account: computed(() => AppState.account)
     })
     watchEffect(async() => keepsService.getKeeps())
+    watchEffect(async() => profilesService.getVaultsByProfile(state.account.id))
+
     return {
       state
     }
