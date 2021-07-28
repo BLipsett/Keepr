@@ -6,12 +6,12 @@
         <p class="cardTitle">
           {{ keep.name }}
         </p>
-        <img class="profPic" :src="keep.creator.picture" @click="getProfile(keep.creatorId)" />
       </div>
     </div>
   </div>
+  <img class="profPic" :src="keep.creator.picture" @click="getProfile(keep.creatorId)" />
   <div v-if="state.activeKeep">
-    <KeepModal :keep="state.activeKeep" />
+    <KeepModal v-if="state.activeKeep" :keep="state.activeKeep" />
   </div>
 </template>
 
@@ -35,10 +35,13 @@ export default {
       async setActiveKeep(keep) {
         AppState.activeKeep = keep
         $('#exampleModal').modal('toggle')
-        console.log(AppState.activeKeep)
+        console.log(AppState.activeKeep, 'active keeep')
       },
       async getProfile(id) {
         $('#exampleModal').modal('toggle')
+        // $('#exampleModal').modal('hide')
+        // $('body').removeClass('modal-open')
+        // $('.modal-backdrop').remove()
         await profilesService.getProfile(id)
         router.push({ name: 'Profiles', params: { id } })
         console.log('get profile', id)

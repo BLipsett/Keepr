@@ -1,16 +1,29 @@
 <template>
-  <h1>Profile page</h1>
   <div class="container-fluid">
-    <div class="row">
-      <div class="card-columns">
-        <Vault v-for="v in state.vaults" :key="v.id" :keep="v" />
+    <div class="row mb-4">
+      <div class="col-md-3">
+        <img v-if="state.profile.picture == state.profile.picture" class="profCreator" :src="state.profile.picture" />
+      </div>
+      <div class="col-md-3 d-flex flex-row">
+        <h2>
+          Vaults: {{ state.vaults.length }}
+        </h2>
+        <h2>
+          Keeps: {{ state.keeps.length }}
+        </h2>
       </div>
     </div>
-  </div>
-
-  <div class="row">
-    <div class="card-columns">
-      <Keep v-for="k in state.keeps" :key="k.id" :keep="k" />
+    <div class="row">
+      <div class="col-12 d-flex">
+        <div class="row d-flex flex-row">
+          <Vault v-for="v in state.vaults" :key="v.id" :vault="v" />
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="card-columns">
+        <Keep v-for="k in state.keeps" :key="k.id" :keep="k" />
+      </div>
     </div>
   </div>
 </template>
@@ -25,13 +38,15 @@ export default {
   setup() {
     const state = reactive({
       keeps: computed(() => AppState.profileKeeps),
-      vaults: computed(() => AppState.profileVaults)
+      vaults: computed(() => AppState.profileVaults),
+      profile: computed(() => AppState.profile)
 
     })
     const route = useRoute()
     watchEffect(
       async() => {
         try {
+          await profilesService.getProfile(route.params.id)
           await profilesService.getVaultsByProfile(route.params.id)
           await profilesService.getKeepsByProfile(route.params.id)
         } catch (error) {
@@ -46,6 +61,30 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+.profCreator {
+  height: 12rem;
+  width: 12rem;
+  border-radius: 25%
+}
+
+@media (min-width: 576px){
+    .card-columns {
+    column-count: 5;
+    column-gap: 1.25rem;
+    orphans: 1;
+    widows: 1;
+    }
+    }
+
+    @media (max-width: 576px)
+    {
+    .card-columns {
+    column-count: 4;
+    column-gap: 1.25rem;
+    orphans: 1;
+    widows: 1;
+    }
+    }
 
 </style>

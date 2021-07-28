@@ -24,10 +24,10 @@ export default {
 }
 </script>
 
-  <style scoped lang="scss">
+  <style lang="scss">
     @media (min-width: 576px){
     .card-columns {
-    column-count: 4;
+    column-count: 5;
     column-gap: 1.25rem;
     orphans: 1;
     widows: 1;
@@ -37,7 +37,7 @@ export default {
     @media (max-width: 576px)
     {
     .card-columns {
-    column-count: 3;
+    column-count: 4;
     column-gap: 1.25rem;
     orphans: 1;
     widows: 1;

@@ -33,20 +33,16 @@ namespace Keepr.Repositories
       string sql = @"
       SELECT
         k.*,
-        v.*,
-     a.*,
-     vk.id AS VaultKeepId
+     vk.id AS VaultKeepId,
+     a.*
       FROM vaultKeeps vk
       JOIN keeps k ON k.id = vk.keepId
-      JOIN vaults v ON v.id = vk.vaultId
-      JOIN accounts a ON v.creatorId = a.id
+      JOIN accounts a ON vk.creatorId = a.id
       WHERE vk.vaultId = @id;
       ";
-      return _db.Query<VaultKeepViewModel, Vault, Profile, VaultKeepViewModel>(sql, (k, v, p) =>
+      return _db.Query<VaultKeepViewModel, Profile, VaultKeepViewModel>(sql, (k, p) =>
       {
-        k.Vault = v;
         k.Creator = p;
-        v.Creator = p;
         return k;
       }, new { id }, splitOn: "id").ToList();
     }
