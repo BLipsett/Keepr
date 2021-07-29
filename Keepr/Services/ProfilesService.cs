@@ -29,15 +29,18 @@ namespace Keepr.Services
     public List<Vault> GetVaultsByProfile(string id)
     {
       List<Vault> vaults = _pr.GetVaultsByProfile(id);
-      foreach (var v in vaults)
-      {
-        if (v.IsPrivate && v.CreatorId != id)
-        {
-          throw new Exception("invalid user");
-        }
-        return vaults;
-      }
-      throw new Exception("bad");
+      List<Vault> creatorList = vaults.Where(v => v.CreatorId == id).ToList();
+      return creatorList;
+
+      // foreach (var v in vaults)
+      // {
+      //   if (v.IsPrivate && v.CreatorId != id)
+      //   {
+      //     throw new Exception("invalid user");
+      //   }
+      //   return vaults;
+      // }
+      // throw new Exception("bad");
     }
 
     public List<Vault> GetPubVaultsByProfile(string id)

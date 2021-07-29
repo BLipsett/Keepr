@@ -1,9 +1,6 @@
 <template>
   <div class="container-fluid">
     <div class="dropdown">
-      <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-toggle="dropdown" aria-expanded="false">
-        Dropdown button
-      </button>
       <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
         <li><a class="dropdown-item" href="#">Action</a></li>
         <li><a class="dropdown-item" href="#">Another action</a></li>
@@ -15,6 +12,11 @@
         <img v-if="state.profile.picture == state.profile.picture" class="profCreator" :src="state.profile.picture" />
       </div>
       <div class="col-md-3 d-flex flex-row">
+        <div>
+          <h1>
+            {{ state.profile.name }}
+          </h1>
+        </div>
         <h2>
           Vaults: {{ state.vaults.length }}
         </h2>
@@ -22,27 +24,32 @@
           Keeps: {{ state.keeps.length }}
         </h2>
       </div>
-      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#keepModal">
-        create keep
-      </button>
-      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#vaultModal">
-        create vault
-      </button>
     </div>
     <div class="row">
-      <div class="col-12 d-flex">
-        <div class="row d-flex flex-row">
-          <Vault v-for="v in state.vaults" :key="v.id" :vault="v" />
-        </div>
+      <div class="col-12">
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#vaultModal">
+          create vault
+        </button>
       </div>
     </div>
     <div class="row">
-      <div class="card-columns">
-        <Keep v-for="k in state.keeps" :key="k.id" :keep="k" />
+      <Vault v-for="v in state.vaults" :key="v.id" :vault="v" />
+    </div>
+    <div class="row">
+      <div class="col-12">
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#keepModal">
+          create keep
+        </button>
+      </div>
+      <div class="row">
+        <div class="card-columns">
+          <Keep v-for="k in state.keeps" :key="k.id" :keep="k" />
+        </div>
       </div>
     </div>
   </div>
   <CreateKeepModal />
+  <CreateVaultModal />
 </template>
 
 <script>

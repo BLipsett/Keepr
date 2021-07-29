@@ -9,14 +9,13 @@
           </p>
         </div>
       </div>
-      <img class="profPic"
+      <img @click.stop
+           class="profPic"
            :src="keep.creator.picture"
            @click="getProfile(keep.creatorId)"
-           data-dismiss="modal"
       />
     </div>
   </div>
-  <KeepModal :keep="state.activeKeep" />
 </template>
 
 <script>

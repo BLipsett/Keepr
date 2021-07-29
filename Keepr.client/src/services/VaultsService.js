@@ -18,6 +18,15 @@ class VaultsService {
     logger.log(res)
   }
 
+  async createVault(vaultData) {
+    try {
+      const res = await api.post('api/vaults', vaultData)
+      AppState.keeps = res.data
+    } catch (error) {
+      logger.error('unable to create')
+    }
+  }
+
   // async getVaults() {
   //   const res = await api.get('api/vaults')
   // }
