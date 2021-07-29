@@ -67,6 +67,20 @@ namespace Keepr.Repositories
       }, new { id }).FirstOrDefault();
     }
 
+    internal int UpdateKeepStats(Keep keep)
+    {
+      string sql = @"
+      UPDATE keeps
+      SET
+      keeps = @Keeps,
+      views = @Views,
+      shares = @Shares
+      WHERE id = @Id;
+      ";
+      return _db.Execute(sql, keep);
+    }
+
+
     internal List<Keep> GetAll()
     {
       string sql = @"

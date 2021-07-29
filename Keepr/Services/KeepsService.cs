@@ -47,12 +47,13 @@ namespace Keepr.Services
     {
 
       Keep keep = _kr.GetOne(id);
+      keep.Views++;
+      int updatedKeep = _kr.UpdateKeepStats(keep);
       if (keep != null)
       {
         return keep;
       }
       throw new Exception("Object Id does not exist");
-
     }
 
     public void Delete(int id, string userId)

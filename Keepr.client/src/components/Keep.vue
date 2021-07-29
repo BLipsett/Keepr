@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="card keepCard" @click="setActiveKeep(keep)" data-toggle="modal" data-target="#exampleModal">
+    <div class="card keepCard" @click="setActiveKeep(keep.id)" data-toggle="modal" data-target="#exampleModal">
       <img class="keepBg" :src="keep.img">
       <div class="card-img-overlay d-flex">
         <div class="align-items-center">
@@ -25,6 +25,7 @@ import { AppState } from '../AppState'
 import { router } from '../router'
 import $ from 'jquery'
 import { vaultsService } from '../services/VaultsService'
+import { keepsService } from '../services/KeepsService'
 
 export default {
   props: {
@@ -36,8 +37,9 @@ export default {
     })
     return {
       state,
-      async setActiveKeep(keep) {
-        AppState.activeKeep = keep
+      async setActiveKeep(id) {
+        await keepsService.getKeepById(id)
+        // AppState.activeKeep = keep
         $('#exampleModal').modal('toggle')
         console.log(AppState.activeKeep, 'active keeep')
       },

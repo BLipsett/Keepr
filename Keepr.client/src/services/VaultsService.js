@@ -1,4 +1,5 @@
 import { AppState } from '../AppState'
+import { router } from '../router'
 import { logger } from '../utils/Logger'
 import { api } from './AxiosService'
 
@@ -28,9 +29,13 @@ class VaultsService {
   }
 
   async getVault(id) {
-    const res = await api.get('api/vaults/' + id)
-    AppState.activeVault = res.data
-    logger.log('the active vault is', AppState.activeVault)
+    try {
+      const res = await api.get('api/vaults/' + id)
+      AppState.activeVault = res.data
+      logger.log('the active vault is', AppState.activeVault)
+    } catch (error) {
+      router.push({ name: 'Home' })
+    }
   }
 
   async deleteVault(id) {

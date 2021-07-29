@@ -14,13 +14,15 @@ namespace Keepr.Services
     private readonly VaultsRepository _vr;
     private readonly AccountService _acs;
     private readonly VaultsService _vs;
+    private readonly KeepsRepository _kr;
 
-    public VaultKeepsService(VaultKeepsRepository vkr, VaultsRepository vr, AccountService acs, VaultsService vs)
+    public VaultKeepsService(VaultKeepsRepository vkr, VaultsRepository vr, AccountService acs, VaultsService vs, KeepsRepository kr)
     {
       _vkr = vkr;
       _vr = vr;
       _acs = acs;
       _vs = vs;
+      _kr = kr;
     }
 
     public VaultKeep Create(VaultKeep vaultKeep, string userId)
@@ -29,6 +31,9 @@ namespace Keepr.Services
       int id = _vkr.Create(vaultKeep);
       vaultKeep.Id = id;
       Vault vault = _vr.GetOne(vaultKeep.VaultId);
+      Keep keep = _kr.GetOne(vaultKeep.KeepId);
+      keep.Keeps++;
+      int finalKeep = _kr.UpdateKeepStats(keep);
       if (vault.CreatorId != userId)
       {
         throw new Exception("only vault owner can create relationship");

@@ -3,6 +3,11 @@ import { logger } from '../utils/Logger'
 import { api } from './AxiosService'
 
 class KeepsService {
+  async getKeepById(id) {
+    const res = await api.get('api/keeps/' + id)
+    AppState.activeKeep = res.data
+  }
+
   async getKeeps() {
     const res = await api.get('api/keeps')
     AppState.keeps = res.data
