@@ -3,9 +3,9 @@
        class="
        modal
        fade"
-       id="exampleModal"
+       id="vaultKeepModal"
        tabindex="-1"
-       aria-labelledby="exampleModalLabel"
+       aria-labelledby="vaultKeepModalModalLabel"
        aria-hidden="true"
   >
     <div class="modal-dialog">
@@ -47,7 +47,9 @@
                   </li>
                 </div>
               </div>
-              <i v-if="state.account.id == state.activeKeep.creatorId" class="far fa-trash-alt" @click="deleteKeep(state.activeKeep.id)"></i>
+              <button v-if="state.account.id == state.activeKeep.creatorId" class="remove-button" @click="deleteFromVaultKeep(state.activeKeep.vaultKeepId)">
+                remove from vault
+              </button>
               <img v-if="state.activeKeep.creator.picture" class="profPic" :src="state.activeKeep.creator.picture" />
               <p>{{ state.activeKeep.creator.name }}</p>
             </div>
@@ -64,7 +66,6 @@ import { AppState } from '../AppState'
 import { computed } from '@vue/runtime-core'
 import $ from 'jquery'
 import { vaultsService } from '../services/VaultsService'
-import { keepsService } from '../services/KeepsService'
 
 export default {
 
@@ -72,6 +73,7 @@ export default {
     const state = reactive({
       activeKeep: computed(() => AppState.activeKeep),
       vaults: computed(() => AppState.profileVaults),
+      // vaultKeep: computed(() => AppState.vaultKeeps),
       account: computed(() => AppState.account)
     })
     return {
@@ -82,8 +84,9 @@ export default {
         await vaultsService.createVaultKeep(vid, kid)
         console.log(vid, kid)
       },
-      async deleteKeep(id) {
-        await keepsService.deleteKeep(id)
+      async deleteFromVaultKeep(id) {
+        await vaultsService.deleteFromVaultKeep(id)
+        console.log(id)
       }
       // unsetActive() {
       //   AppState.activeKeep = {}

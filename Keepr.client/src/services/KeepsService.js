@@ -17,6 +17,15 @@ class KeepsService {
       logger.error('unable to create')
     }
   }
+
+  async deleteKeep(id) {
+    try {
+      const res = await api.delete('api/keeps/' + id)
+      logger.log(res.data, ' deleted keep')
+    } catch (error) {
+      logger.error('unable to delete')
+    }
+  }
 }
 
 export const keepsService = new KeepsService()

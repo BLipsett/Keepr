@@ -27,9 +27,21 @@ class VaultsService {
     }
   }
 
-  // async getVaults() {
-  //   const res = await api.get('api/vaults')
-  // }
+  async getVault(id) {
+    const res = await api.get('api/vaults/' + id)
+    AppState.activeVault = res.data
+    logger.log('the active vault is', AppState.activeVault)
+  }
+
+  async deleteVault(id) {
+    const res = await api.delete('api/vaults/' + id)
+    logger.log(res.data)
+  }
+
+  async deleteFromVaultKeep(id) {
+    const res = await api.delete('api/vaultKeeps/' + id)
+    logger.log('you deleted', res.data, 'relationship')
+  }
 }
 
 export const vaultsService = new VaultsService()

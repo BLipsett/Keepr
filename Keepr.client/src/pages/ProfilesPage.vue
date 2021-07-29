@@ -1,12 +1,5 @@
 <template>
   <div class="container-fluid">
-    <div class="dropdown">
-      <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-        <li><a class="dropdown-item" href="#">Action</a></li>
-        <li><a class="dropdown-item" href="#">Another action</a></li>
-        <li><a class="dropdown-item" href="#">Something else here</a></li>
-      </ul>
-    </div>
     <div class="row mb-4">
       <div class="col-md-3">
         <img v-if="state.profile.picture == state.profile.picture" class="profCreator" :src="state.profile.picture" />
