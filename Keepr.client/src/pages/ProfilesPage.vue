@@ -4,12 +4,12 @@
       <div class="col-md-3">
         <img v-if="state.profile.picture == state.profile.picture" class="profCreator" :src="state.profile.picture" />
       </div>
-      <div class="col-md-3 d-flex flex-row">
-        <div>
-          <h1>
-            {{ state.profile.name }}
-          </h1>
-        </div>
+
+      <div class="col-md-3 ">
+        <h1>
+          {{ state.profile.name }}
+        </h1>
+
         <h2>
           Vaults: {{ state.vaults.length }}
         </h2>
@@ -18,24 +18,25 @@
         </h2>
       </div>
     </div>
+
     <div class="row">
       <div class="col-12">
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#vaultModal">
+        <button v-if="state.profile.id == account.id" type="button" class="btn btn-primary" data-toggle="modal" data-target="#vaultModal">
           create vault
         </button>
       </div>
     </div>
-    <div class="row">
+    <div class="row m-2">
       <Vault v-for="v in state.vaults" :key="v.id" :vault="v" />
     </div>
     <div class="row">
       <div class="col-12">
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#keepModal">
+        <button v-if="state.profile.id == account.id" type="button" class="btn btn-primary" data-toggle="modal" data-target="#keepModal">
           create keep
         </button>
       </div>
-      <div class="row">
-        <div class="card-columns">
+      <div class="row m-2">
+        <div class="card-columns m-2">
           <Keep v-for="k in state.keeps" :key="k.id" :keep="k" />
         </div>
       </div>
@@ -73,7 +74,8 @@ export default {
       }
     )
     return {
-      state
+      state,
+      account: computed(() => AppState.account)
     }
   }
 }

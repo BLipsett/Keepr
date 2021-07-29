@@ -56,7 +56,7 @@ namespace Keepr.Controllers
         {
           return Ok(_ps.GetPubVaultsByProfile(id));
         }
-        return Ok(_ps.GetVaultsByProfile(id));
+        return Ok(_ps.GetVaultsByProfile(id, userInfo.Id));
       }
       catch (System.Exception e)
       {

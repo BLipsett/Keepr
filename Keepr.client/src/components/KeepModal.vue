@@ -14,42 +14,52 @@
           <div class="col-6">
             <img class="modalKeepImg" :src="state.activeKeep.img" />
           </div>
-          <div class="col-6">
-            <i class="fas fa-times ml-auto m-2" data-dismiss="modal" aria-label="Close"></i>
-            <div class="icons col-12 d-flex justify-content-center p-2">
-              <i class="fas fa-eye p-2">{{ state.activeKeep.views }} </i>
-              <i class="fab fa-korvue p-2">{{ state.activeKeep.keeps }} </i>
-              <i class="fas fa-share-alt p-2">{{ state.activeKeep.shares }} </i>
+          <div class="col-6 d-flex flex-column">
+            <div class="row">
+              <div class="col-12">
+                <i class="fas fa-times ml-auto m-2" data-dismiss="modal" aria-label="Close"></i>
+                <div class="icons col-12 d-flex justify-content-center p-2">
+                  <i class="fas fa-eye p-2">{{ state.activeKeep.views }} </i>
+                  <i class="fab fa-korvue p-2">{{ state.activeKeep.keeps }} </i>
+                  <i class="fas fa-share-alt p-2">{{ state.activeKeep.shares }} </i>
+                </div>
+                <div class="d-flex justify-content-center">
+                  <h2>
+                    {{ state.activeKeep.name }}
+                  </h2>
+                </div>
+                <div class="d-flex justify-content-center">
+                  <p>{{ state.activeKeep.description }}</p>
+                </div>
+                <hr>
+              </div>
             </div>
-            <div class="d-flex justify-content-center">
-              <h2>
-                {{ state.activeKeep.name }}
-              </h2>
-            </div>
-            <div class="d-flex justify-content-center">
-              <p>{{ state.activeKeep.description }}</p>
-            </div>
-            <br />
-            <div v-if="state.activeKeep.creator.picture">
-              <div class="dropdown">
-                <button class="btn btn-secondary dropdown-toggle"
-                        type="button"
-                        id="dropdownMenuButton"
-                        data-toggle="dropdown"
-                        aria-haspopup="true"
-                        aria-expanded="false"
-                >
-                  ADD TO VAULT
-                </button>
+            <div class="row mt-auto" v-if="state.activeKeep.creator.picture">
+              <div class="col-3">
+                <div class="dropdown">
+                  <button class="btn btn-secondary dropdown-toggle"
+                          type="button"
+                          id="dropdownMenuButton"
+                          data-toggle="dropdown"
+                          aria-haspopup="true"
+                          aria-expanded="false"
+                  >
+                    ADD TO VAULT
+                  </button>
+                </div>
+              </div>
+              <div class="col-3">
                 <div v-if="state.vaults != null" class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                   <li v-for="v in state.vaults" :key="v.id" @click="addToVault(v.id)">
                     {{ v.name }}
                   </li>
                 </div>
               </div>
-              <i v-if="state.account.id == state.activeKeep.creatorId" class="far fa-trash-alt" @click="deleteKeep(state.activeKeep.id)"></i>
-              <img v-if="state.activeKeep.creator.picture" class="profPic" :src="state.activeKeep.creator.picture" />
-              <p>{{ state.activeKeep.creator.name }}</p>
+              <div class="col-3">
+                <i v-if="state.account.id == state.activeKeep.creatorId" class="far fa-trash-alt" @click="deleteKeep(state.activeKeep.id)"></i>
+                <img v-if="state.activeKeep.creator.picture" class="profPic" :src="state.activeKeep.creator.picture" />
+                <p>{{ state.activeKeep.creator.name }}</p>
+              </div>
             </div>
           </div>
         </div>
@@ -105,7 +115,7 @@ export default {
 }
 
 .modal-dialog {
-  max-width: 60vw;
+  max-width: 70vw;
   width: 100%;
 }
 

@@ -30,11 +30,15 @@ namespace Keepr.Services
     public Vault GetCreatorsVault(int id, string userId)
     {
       Vault vault = _vr.GetOne(id);
-      if (vault.CreatorId == userId)
+      if (vault.CreatorId == userId && vault.IsPrivate == true)
       {
         return vault;
       }
-      throw new Exception("Access denied");
+      else if (vault.IsPrivate == false)
+      {
+        return vault;
+      }
+      throw new Exception("invalid user");
     }
 
     public Vault Create(Vault newVault)

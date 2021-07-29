@@ -34,7 +34,7 @@ class VaultsService {
       AppState.activeVault = res.data
       logger.log('the active vault is', AppState.activeVault)
     } catch (error) {
-      router.push({ name: 'Home' })
+      router.push({ path: '/' })
     }
   }
 
