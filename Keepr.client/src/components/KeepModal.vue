@@ -12,7 +12,11 @@
       <div class="modal-content d-flex flex-column p-2">
         <div class="row">
           <div class="col-6">
-            <img class="modalKeepImg" :src="state.activeKeep.img" />
+            <img class="modalKeepImg"
+                 alt="keep image"
+                 title="keep image"
+                 :src="state.activeKeep.img"
+            />
           </div>
           <div class="col-6 d-flex flex-column">
             <div class="row">
@@ -46,18 +50,20 @@
                   >
                     ADD TO VAULT
                   </button>
+                  <div v-if="state.vaults != null" class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <li v-for="v in state.vaults" class="dropdown-item" :key="v.id" @click="addToVault(v.id)">
+                      {{ v.name }}
+                    </li>
+                  </div>
                 </div>
               </div>
               <div class="col-3">
-                <div v-if="state.vaults != null" class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                  <li v-for="v in state.vaults" :key="v.id" @click="addToVault(v.id)">
-                    {{ v.name }}
-                  </li>
-                </div>
+              </div>
+              <div class="col-1">
+                <i v-if="state.account.id == state.activeKeep.creatorId" class="far fa-trash-alt trash-boi" @click="deleteKeep(state.activeKeep.id)"></i>
               </div>
               <div class="col-3">
-                <i v-if="state.account.id == state.activeKeep.creatorId" class="far fa-trash-alt" @click="deleteKeep(state.activeKeep.id)"></i>
-                <img v-if="state.activeKeep.creator.picture" class="profPic" :src="state.activeKeep.creator.picture" />
+                <img v-if="state.activeKeep.creator.picture" class="profPic" alt="profile image" title="profile image" :src="state.activeKeep.creator.picture" />
                 <p>{{ state.activeKeep.creator.name }}</p>
               </div>
             </div>
@@ -93,7 +99,9 @@ export default {
         console.log(vid, kid)
       },
       async deleteKeep(id) {
-        await keepsService.deleteKeep(id)
+        if (window.confirm('Do you want to delete this keep?')) {
+          await keepsService.deleteKeep(id)
+        }
       }
       // unsetActive() {
       //   AppState.activeKeep = {}
@@ -104,7 +112,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
 
 .icons i {
   font-size: 1.5rem;
@@ -123,6 +131,10 @@ export default {
   height: 2rem;
   width: 2rem;
   border-radius: 25%;
+}
+
+.trash-boi {
+  font-size: 1.5rem;
 }
 
 </style>

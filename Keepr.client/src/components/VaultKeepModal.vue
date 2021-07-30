@@ -47,7 +47,7 @@
                   </li>
                 </div>
               </div>
-              <button v-if="state.account.id == state.activeKeep.creatorId" class="remove-button" @click="deleteFromVaultKeep(state.activeKeep.vaultKeepId)">
+              <button class="remove-button" @click="deleteFromVaultKeep(state.activeKeep.vaultKeepId)">
                 remove from vault
               </button>
               <img v-if="state.activeKeep.creator.picture" class="profPic" :src="state.activeKeep.creator.picture" />
@@ -85,7 +85,9 @@ export default {
         console.log(vid, kid)
       },
       async deleteFromVaultKeep(id) {
-        await vaultsService.deleteFromVaultKeep(id)
+        if (window.confirm('remove this keep from your collection?')) {
+          await vaultsService.deleteFromVaultKeep(id)
+        }
         console.log(id)
       }
       // unsetActive() {

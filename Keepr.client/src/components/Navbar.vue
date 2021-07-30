@@ -121,6 +121,6 @@ a:hover {
 }
 
 .bg-keepr {
-  color: yellow;
+  background-color: rgb(228 134 134);
 }
 </style>

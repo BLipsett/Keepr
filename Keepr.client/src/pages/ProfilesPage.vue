@@ -1,6 +1,6 @@
 <template>
-  <div class="container-fluid">
-    <div class="row mb-4">
+  <div class="container-fluid" v-if="state.profile">
+    <div class="row my-4">
       <div class="col-md-3">
         <img v-if="state.profile.picture == state.profile.picture" class="profCreator" :src="state.profile.picture" />
       </div>
@@ -20,10 +20,8 @@
     </div>
 
     <div class="row">
-      <div class="col-12">
-        <button v-if="state.profile.id == account.id" type="button" class="btn btn-primary" data-toggle="modal" data-target="#vaultModal">
-          create vault
-        </button>
+      <div class="col-12 d-flex flex-row">
+        <h3>Create Vault<i class="fas fa-plus-circle pl-1" v-if="state.profile.id == account.id" data-toggle="modal" data-target="#vaultModal"></i></h3>
       </div>
     </div>
     <div class="row m-2">
@@ -31,9 +29,11 @@
     </div>
     <div class="row">
       <div class="col-12">
-        <button v-if="state.profile.id == account.id" type="button" class="btn btn-primary" data-toggle="modal" data-target="#keepModal">
+        <h3>Create Keep<i class="fas fa-plus-circle pl-1" v-if="state.profile.id == account.id" data-toggle="modal" data-target="#keepModal"></i></h3>
+
+        <!-- <button v-if="state.profile.id == account.id" type="button" class="btn btn-primary" data-toggle="modal" data-target="#keepModal">
           create keep
-        </button>
+        </button> -->
       </div>
       <div class="row m-2">
         <div class="card-columns m-2">

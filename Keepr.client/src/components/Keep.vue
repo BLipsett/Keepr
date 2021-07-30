@@ -1,7 +1,10 @@
 <template>
   <div>
     <div class="card keepCard" @click="setActiveKeep(keep.id)" data-toggle="modal" data-target="#exampleModal">
-      <img class="keepBg" :src="keep.img">
+      <img class="keepBg"
+           alt="keep image"
+           :src="keep.img"
+      >
       <div class="card-img-overlay d-flex">
         <div class="align-items-center">
           <p class="cardTitle">
@@ -11,6 +14,8 @@
       </div>
       <img @click.stop
            class="profPic"
+           title="profile image"
+           alt="profile image"
            :src="keep.creator.picture"
            @click="getProfile(keep.creatorId)"
       />
@@ -69,6 +74,7 @@ export default {
 .keepCard {
 max-width: 100%;
 border-radius: 1.25rem;
+cursor: pointer;
 }
 
 .keepBg {

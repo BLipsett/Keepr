@@ -1,11 +1,19 @@
 <template>
-  <h2>
-    vault keeps
-  </h2>
-  <i v-if="state.account.id == state.activeVault.creatorId" class="trash far fa-trash-alt" @click="deleteVault(state.activeVault.id)"></i>
-  <div class="container-fluid">
-    <div class="card-columns">
-      <VaultKeep v-for="v in state.vKeeps" :key="v.id" :keep="v" />
+  <div class="container">
+    <div class="row flex-column">
+      <div class="col-8">
+        <h1>My Keeps</h1>
+        <div class="col-2">
+          <i v-if="state.account.id == state.activeVault.creatorId" class="trash far fa-trash-alt" @click="deleteVault(state.activeVault.id)"></i>
+        </div>
+      </div>
+      <div class="col-12">
+        <div class="container-fluid">
+          <div class="card-columns">
+            <VaultKeep v-for="v in state.vKeeps" :key="v.id" :keep="v" />
+          </div>
+        </div>
+      </div>
     </div>
   </div>
   <VaultKeepModal />
@@ -30,7 +38,9 @@ export default {
     return {
       state,
       async deleteVault(id) {
-        await vaultsService.deleteVault(id)
+        if (window.confirm('Do you want to delete this vault?')) {
+          await vaultsService.deleteVault(id)
+        }
       }
 
     }
