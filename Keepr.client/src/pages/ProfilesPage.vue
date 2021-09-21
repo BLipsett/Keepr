@@ -83,8 +83,8 @@ export default {
 
 <style scoped>
 .profCreator {
-  height: 12rem;
-  width: 12rem;
+  height: 11.5rem;
+  width: 11.5rem;
   border-radius: 25%
 }
 
